@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Draw</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+        background: rgb(249, 249, 249);
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="2000" height="1000"></canvas>
+  </body>
+  <footer>Draw whatever you want</footer>
+  <script>
+    let canvas = document.getElementById("canvas")
+    let context = canvas.getContext("2d")
+
+    let drawing = false
+    let prev = {
+      x: 0,
+      y: 0
+    }
+
+    canvas.addEventListener("mouseup", function(event){
+      drawing = false
+    })
+
+    canvas.addEventListener("mousemove", function(event){
+      if(drawing) {
+        drawLine(prev.x, prev.y, event.pageX, event.pageY)
+        prev.x = event.pageX
+        prev.y = event.pageY
+      }
+    })
+
+    canvas.addEventListener("mousedown", function(event){
+      drawing = true
+      prev.x = event.pageX
+      prev.y = event.pageY
+    })
+
+    function drawLine(fromX, fromY, toX, toY) {
+      context.moveTo(fromX, fromY)
+      context.lineTo(toX, toY)
+      context.stroke()
+    }
+
+  </script>
+</html>
